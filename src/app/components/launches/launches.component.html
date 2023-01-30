@@ -1,0 +1,50 @@
+<div
+  class="bg-spaceX bg-no-repeat bg-cover bg-center h-[100vh] flex items-center justify-center"
+>
+  <div class="w-3/5 h-3/5 table-wrapper overflow-auto">
+    <input
+      [formControl]="searchInput"
+      type="text"
+      placeholder="Search Launches"
+    />
+    <table class="w-full text-sm text-left text-white">
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 bg-gray-700 text-white"
+      >
+        <tr>
+          <th class="px-6 py-3">Flight Number</th>
+          <th class="px-6 py-3">Rocket Name</th>
+          <th class="px-6 py-3">Mission Name</th>
+          <th class="px-6 py-3">Flight Image</th>
+          <th class="px-6 py-3">Launch Year</th>
+          <th class="px-6 py-3">Launch Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let launch of launches; let last = last"
+          appLaunches
+          #lastElement
+          [attr.id]="last ? 'last-element' : null"
+          (isIntersecting)="isIntersecting($event)"
+          class="border-b dark:bg-gray-800 dark:border-gray-700"
+        >
+          <td class="px-6 py-4 w-14">{{ launch.flight_number }}</td>
+          <td class="px-6 py-4 w-14">{{ launch.rocket.rocket_name }}</td>
+          <td class="px-6 py-4 w-14">{{ launch.mission_name }}</td>
+          <td class="px-6 py-4 w-14">
+            <img
+              class="w-12 h-12"
+              [src]="launch.links.mission_patch_small || defaultImage"
+              alt=""
+            />
+          </td>
+          <td class="px-6 py-4 w-14">{{ launch.launch_year }}</td>
+          <td class="px-6 py-4 w-14">
+            {{ launch.launch_date_local | date }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
